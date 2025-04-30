@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>London Craft Week 2025</title>
+  <style>
+    /* —— Theme Variables —— */
+    :root {
+      --bg-page: #f7f5f3;
+      --bg-section: #ffffff;
+      --text-body: #2e2e2e;
+      --text-heading: #1a1a1a;
+      --accent: #bfa16f;
+      --overlay: rgba(30, 30, 30, 0.85);
+      --shadow: rgba(0, 0, 0, 0.08);
+    }
+
+    /* —— Reset & Base Styles —— */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+      line-height: 1.5;
+      color: var(--text-body);
+      background: var(--bg-page);
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: 'Georgia', serif;
+      color: var(--text-heading);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    #main-heading {
+      font-size: 2.5rem;
+    }
+
+    section {
+      background: var(--bg-section);
+      border-radius: 8px;
+      padding: 30px 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+
+    /* Upcoming Logos */
+    #upcoming {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    #upcoming figure {
+      margin: 0;
+      text-align: center;
+    }
+
+    #upcoming img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid var(--text-heading);
+      box-shadow: 0 4px 8px var(--shadow);
+    }
+
+    #upcoming figcaption {
+      font-size: .8em;
+      margin-top: 6px;
+      color: var(--text-body);
+    }
+
+    /* Gallery */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      /* full width of its grid track, capped at 260px */
+      width: 100%;
+      max-width: 260px;
+      /* force a 1:1 height-to-width ratio */
+      aspect-ratio: 1 / 1;
+
+      perspective: 1200px;
+      position: relative;
+      margin: 0 auto 20px;
+      /* center & add bottom gap */
+      border-radius: 8px;
+      box-shadow: 0 6px 16px var(--shadow);
+    }
+
+    .card-inner {
+      width: 100%;
+      height: 100%;
+      transition: transform .6s;
+      transform-style: preserve-3d;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .card-inner:focus {
+      box-shadow: 0 0 0 3px var(--accent);
+    }
+
+    .card.show-details .card-inner,
+    .card:hover .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front,
+    .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .card-front img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .3s, box-shadow .3s;
+    }
+
+    article.card:hover .card-front img {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px var(--shadow);
+    }
+
+    .card-back {
+      background: var(--overlay);
+      color: #fff;
+      transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .card-back h3 {
+      margin-bottom: 8px;
+      color: var(--accent);
+    }
+
+    .card-back p {
+      font-size: .9em;
+      margin-bottom: 12px;
+    }
+
+    .show-btn {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: .8em;
+      cursor: pointer;
+    }
+
+    .card-info {
+      display: none;
+    }
+
+    /* Detail Panel */
+    #detail-panel {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      border-top: 4px solid var(--accent);
+      padding-top: 20px;
+    }
+
+    #detail-photo {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: 0 4px 8px var(--shadow);
+      flex-shrink: 0;
+    }
+
+    .tabs {
+      margin-bottom: 12px;
+    }
+
+    .tabs button {
+      background: none;
+      border: 2px solid var(--text-heading);
+      padding: 6px 12px;
+      margin-right: 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      color: var(--text-heading);
+      font-weight: bold;
+    }
+
+    .tabs button.active {
+      background: var(--text-heading);
+      color: var(--bg-section);
+      border-color: var(--accent);
+    }
+
+    .detail-content {
+      display: none;
+    }
+
+    .detail-content.active {
+      display: block;
+    }
+
+    .detail-content p {
+      margin-bottom: 12px;
+    }
+
+    /* Contact Embed */
+    .google-form-wrapper {
+      padding: 20px;
+      border-radius: 8px;
+      background: var(--bg-section);
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+
+    .google-form-wrapper iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1 id="main-heading">London Craft Week 2025</h1>
+  </header>
+
+  <main>
+    <!-- Upcoming Logos -->
+    <section id="upcoming" aria-label="Event Logos">
+      <figure>
+        <img src="logo1.png" alt="Event 1 Logo">
+        <figcaption>Event 1</figcaption>
+      </figure>
+      <figure>
+        <img src="logo2.png" alt="Event 2 Logo">
+        <figcaption>Event 2</figcaption>
+      </figure>
+      <figure>
+        <img src="logo3.png" alt="Event 3 Logo">
+        <figcaption>Event 3</figcaption>
+      </figure>
+    </section>
+
+    <!-- Artist Gallery -->
+    <section class="gallery" aria-label="Artist Gallery">
+      <!-- Fazal Ahmed -->
+      <article class="card" tabindex="0" data-name="Fazal Ahmed" data-photo="fazal-avatar.jpg">
+        <div class="card-inner" tabindex="0" role="button" aria-label="Flip card for Fazal Ahmed">
+          <figure class="card-front">
+            <img src="confined-show.jpg" srcset="confined-show@2x.jpg 2x" loading="lazy" alt="“Confined” by Fazal Ahmed"
+              onerror="console.error('Image failed to load:', this.src)">
+
+          </figure>
+          <div class="card-back">
+            <h3>Fazal Ahmed</h3>
+            <p>Hover or tap Show for details</p>
+          </div>
+        </div>
+        <button class="show-btn" aria-label="Show details for Fazal Ahmed">Show</button>
+        <div class="card-info">
+          <div class="card-bio">
+            After graduating from the Central Institute of Arts and Craft in Karachi, Pakistan, Fazal Ahmed- a graphic
+            Designer turned artist, embarked on his creative journey as a sculptor, painter, jewellery artist , and
+            multidisciplinary artist. Over the past two decades, he has refined his unique artistic voice, establishing
+            himself as one of Pakistan’s most compelling and distinctive talents.
+
+            Fazal works with clay as one of his primary mediums, shaping it with remarkable skill and imaginative flair.
+            His hands bring life to the material, transforming simple earth into expressive forms that reflect cultural
+            narratives and personal symbolism. Each piece is a testament to his deep understanding of texture, form, and
+            movement.
+
+            In addition to his sculptural work, Fazal is also known for his intricately crafted sculpted jewellery. Each
+            piece is more than an accessory—it is a miniature artwork, that blends artistic elegance with wearable form,
+            turning everyday adornment into a bold expression of identity and creativity.
+
+            A recurring theme in Fazal’s recent 3D and relief sculptures is Confined. Through haunting imagery of
+            blindfolded faces and exaggerated, distorted limbs, his works express a powerful commentary on
+            psychological, societal, and emotional restrictions. These sculptures evoke a sense of struggle, silence,
+            and suppression—giving form to what is often left unspoken. Fazal carefully selects mediums such as white
+            ceramic clay and terracotta clay for each piece, chosen for their texture, tone, and expressive potential.
+            After undergoing the transformative process of kiln firing, some works are further elevated with delicate
+            touches of gold leaf, adding contrast and symbolic richness to the final form.
+
+            His broader body of work draws on African and Aboriginal aesthetics, merging these influences with a vibrant
+            colour palette to produce pieces that are both visually arresting . Fazal’s innovative approach and bold
+            style have positioned him as a thought-provoking presence in the contemporary art scene.
+
+            Fazal has exhibited his work in prominent galleries across Dubai,UAE and Pakistan. His exhibitions have been
+            praised for their emotional intensity and for challenging viewers to confront themes of identity,
+            confinement, and transformation.
+          </div>
+          <div class="card-art">
+            “Confined” is a compelling relief sculpture composed of numerous expressive faces meticulously crafted from
+            white ceramic clay. Each face is encased in an oval, cocoon-like form, evoking a sense of individual
+            entrapment. These forms are systematically arranged in a tight grid within a deep, shadow-box frame, giving
+            the illusion of both physical and psychological confinement. The faces, though similar in structure, each
+            display subtle differences in expression—some neutral, others anguished or distorted—conveying a broad
+            emotional spectrum trapped within uniform boundaries.
+            The use of white ceramic clay enhances the piece's starkness and purity while also invoking themes of
+            silence, anonymity, and sterility. The matte, unglazed surface contributes to the raw, organic feel of the
+            work, allowing the emotional resonance of each face to stand out without distraction. The repetitive
+            arrangement emphasizes a loss of individuality, as though the figures are prisoners of an invisible system,
+            silently screaming from behind their ceramic enclosures.
+            Among the predominantly white faces, a few are rendered in deep black, sharply breaking the visual rhythm
+            and drawing immediate attention. These dark elements act as visual disruptions—perhaps representing moments
+            of despair, difference, or rebellion against conformity. Their presence challenges the uniformity and
+            underscores the psychological tension that permeates the piece.
+            “Confined” is not merely a visual experience but an emotional one. It speaks to the human condition—our
+            inner struggles, societal pressures, and the quiet pain of isolation. The viewer is invited to confront the
+            reality of what it means to feel boxed in, both physically and emotionally. In its stillness, the piece
+            evokes a loud, collective voice—one that resonates with anyone who has ever felt unseen, unheard, or
+            emotionally constrained. Through its minimalist yet poignant design, “Confined” becomes a powerful
+            reflection on identity, constraint, and the longing for release.
+          </div>
+        </div>
+      </article>
+
+      <!-- Amna Fraz -->
+      <article class="card" tabindex="0" data-name="Amna Fraz" data-photo="amna-avatar.jpg">
+        <div class="card-inner" tabindex="0" role="button" aria-label="Flip card for Amna Fraz">
+          <figure class="card-front">
+            <img src="amna-show.jpg" srcset="amna-show@2x.jpg 2x" loading="lazy" alt="Artwork by Amna Fraz">
+          </figure>
+          <div class="card-back">
+            <h3>Amna Fraz</h3>
+            <p>Hover or tap Show for details</p>
+          </div>
+        </div>
+        <button class="show-btn" aria-label="Show details for Amna Fraz">Show</button>
+        <div class="card-info">
+          <div class="card-bio">
+            Karachi-based artist Amna Fraz, educated at the National College of Arts, skillfully integrates age-old
+            techniques with a contemporary vision.
+            Channeling the creative energies of the world around us, Amna crafts her own pigments by refining minerals
+            and rocks to extract colours of unparalleled purity and vibrancy.
+            Her work reflects tangible connections, linking us to our surroundings. It is an expression of the world's
+            artistry, underscoring the depth and complexity of our shared environment and a celebration of the cosmos
+            that we are all a part of, elementally connected to nature and its infinite wonders.
+            A reminder to slow down and reconnect. Ajami Art, representative of the pinnacle of Islamic prosperity, was
+            cultivated in Damascus, which stood as one of the world's most prosperous and culturally diverse commercial
+            centers, influencing artistic styles and embracing trends. The Ajami Room reflects this era with a
+            distinctive technique where artists applied a thick paste made of gypsum and animal glue that, once dried,
+            created raised ornamentation. These elements were further enhanced with gold leaf and painted over in egg
+            tempera.
+            Inspired by these opulent historical interiors, my work seeks to blend traditional craft with a modern
+            sensibility while remaining faithful to its methods and materials. Central to my artistic practice is the
+            use of natural pigments—vivid colors drawn from minerals and earth, such as blue from lapis lazuli,
+            vermillion from cinnabar, and green from malachite. These practices not only connect peoples and eras but
+            also deepen our appreciation for craftsmanship as a bridge linking past and present, prompting reflection on
+            the enduring impact of cultural traditions across time and space.
+          </div>
+          <div class="card-art">
+            Ajami Art, representative of the pinnacle of Islamic prosperity, was cultivated in Damascus, which stood as
+            one of the world's most prosperous and culturally diverse commercial centers, influencing artistic styles
+            and embracing trends. The Ajami Room reflects this era with a distinctive technique where artists applied a
+            thick paste made of gypsum and animal glue that, once dried, created raised ornamentation. These elements
+            were further enhanced with gold leaf and painted over in egg tempera.
+            Inspired by these opulent historical interiors, my work seeks to blend traditional craft with a modern
+            sensibility while remaining faithful to its methods and materials. Central to my artistic practice is the
+            use of natural pigments—vivid colors drawn from minerals and earth, such as blue from lapis lazuli,
+            vermillion from cinnabar, and green from malachite. These practices not only connect peoples and eras but
+            also deepen our appreciation for craftsmanship as a bridge linking past and present, prompting reflection on
+            the enduring impact of cultural traditions across time and space.
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Detail Panel -->
+    <section id="detail-panel" aria-live="polite">
+      <img id="detail-photo" src="" alt="">
+      <div class="info">
+        <h2 id="detail-name"></h2>
+        <div class="tabs" role="tablist">
+          <button role="tab" data-tab="bio" class="active">Bio</button>
+          <button role="tab" data-tab="art">About the Art</button>
+        </div>
+        <div id="detail-bio" class="detail-content active" role="tabpanel"></div>
+        <div id="detail-art" class="detail-content" role="tabpanel"></div>
+      </div>
+    </section>
+
+    <!-- Contact Form Embed -->
+    <section id="contact">
+      <h2>Contact Us</h2>
+      <div class="google-form-wrapper">
+        <iframe
+          src="https://docs.google.com/forms/d/e/1FAIpQLSdPOC2IVRRU4v3NWwLrRh15gvHb0z3Uc1odcSR4TsNWQTf7CQ/viewform?embedded=true"
+          loading="lazy">
+          Loading…
+        </iframe>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const cards = document.querySelectorAll('.card');
+    const detailPhoto = document.getElementById('detail-photo');
+    const detailName = document.getElementById('detail-name');
+    const detailBio = document.getElementById('detail-bio');
+    const detailArt = document.getElementById('detail-art');
+    const tabs = document.querySelectorAll('.tabs button');
+
+    function showTab(tab) {
+      tabs.forEach(btn => {
+        const active = btn.dataset.tab === tab;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-selected', active);
+      });
+      detailBio.classList.toggle('active', tab === 'bio');
+      detailArt.classList.toggle('active', tab === 'art');
+    }
+
+    function updateDetailPanel(card) {
+      detailPhoto.src = card.dataset.photo;
+      detailPhoto.alt = card.dataset.name;
+      detailName.textContent = card.dataset.name;
+      detailBio.innerHTML = card.querySelector('.card-bio').innerHTML;
+      detailArt.innerHTML = card.querySelector('.card-art').innerHTML;
+      showTab('bio');
+    }
+
+    cards.forEach(card => {
+      const inner = card.querySelector('.card-inner');
+      const btn = card.querySelector('.show-btn');
+
+      inner.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          btn.click();
+        }
+      });
+
+      card.addEventListener('mouseenter', () => {
+        card.classList.add('show-details');
+        updateDetailPanel(card);
+      });
+      card.addEventListener('mouseleave', () => {
+        card.classList.remove('show-details');
+      });
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        card.classList.toggle('show-details');
+        updateDetailPanel(card);
+      });
+    });
+
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => showTab(btn.dataset.tab));
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateDetailPanel(cards[0]);
+    });
+  </script>
+</body>
+
+</html>
