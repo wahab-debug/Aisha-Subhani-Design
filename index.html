@@ -115,6 +115,14 @@
       loading: lazy;
     }
 
+
+    /* 3) On very narrow screens, scale them down further */
+    @media (max-width: 480px) {
+      .sponsor-logos img {
+        max-width: 80px;
+      }
+    }
+
     /* —— Two-column Artist Layout —— */
     .artist-row {
       display: grid;
@@ -289,11 +297,12 @@
     }
 
     #lightbox .inner {
-      position: relative;
-      max-width: 90vw;
-      max-height: 90vh;
+      /* new limits: never wider than 60% of viewport, never taller than 80% */
+      max-width: 60vw;
+      max-height: 80vh;
       overflow: auto;
     }
+
 
     #lightbox img {
       display: block;
