@@ -12,7 +12,8 @@
     content="Interior design through the lens of craft, featuring artists Fazal Ahmed & Amna Fraz.">
   <meta property="og:image" content="https://yourdomain.com/LCW_Web_Banner_Rectangle_Dates_V1.jpg">
   <meta name="twitter:card" content="summary_large_image">
-
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <style>
     /* —— Variables & Reset —— */
     :root {
@@ -35,7 +36,7 @@
     body {
       background: var(--bg-page);
       color: var(--text-body);
-      font-family: sans-serif;
+      font-family: 'Montserrat', sans-serif;
       line-height: var(--line-height);
       padding: 20px;
     }
@@ -85,7 +86,7 @@
     }
 
     .main-header h1 {
-      font-family: serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 2.5rem;
       color: var(--text-heading);
       margin-bottom: 8px;
@@ -102,6 +103,15 @@
       margin-bottom: 12px;
     }
 
+    @media (max-width: 480px) {
+      .main-header h1 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: clip;
+        font-size: 1.8rem;
+      }
+    }
+
     .sponsor-logos {
       display: flex;
       justify-content: center;
@@ -112,7 +122,6 @@
     .sponsor-logos img {
       height: 80px;
       object-fit: contain;
-      loading: lazy;
     }
 
 
@@ -139,6 +148,14 @@
       display: flex;
       flex-direction: column;
     }
+
+    .artist-card .tab-content {
+      text-align: left;
+      letter-spacing: -0.02em;
+      word-spacing: normal;
+      font-weight: 400;
+    }
+
 
     /* —— Image gallery & lightbox trigger —— */
     .image-container {
@@ -487,18 +504,7 @@
             Her work reflects tangible connections, linking us to our surroundings. It is an expression of the world's
             artistry, underscoring the depth and complexity of our shared environment and a celebration of the cosmos
             that we are all a part of, elementally connected to nature and its infinite wonders.
-            A reminder to slow down and reconnect. Ajami Art, representative of the pinnacle of Islamic prosperity, was
-            cultivated in Damascus, which stood as one of the world's most prosperous and culturally diverse commercial
-            centers, influencing artistic styles and embracing trends. The Ajami Room reflects this era with a
-            distinctive technique where artists applied a thick paste made of gypsum and animal glue that, once dried,
-            created raised ornamentation. These elements were further enhanced with gold leaf and painted over in egg
-            tempera.
-            Inspired by these opulent historical interiors, my work seeks to blend traditional craft with a modern
-            sensibility while remaining faithful to its methods and materials. Central to my artistic practice is the
-            use of natural pigments—vivid colors drawn from minerals and earth, such as blue from lapis lazuli,
-            vermillion from cinnabar, and green from malachite. These practices not only connect peoples and eras but
-            also deepen our appreciation for craftsmanship as a bridge linking past and present, prompting reflection on
-            the enduring impact of cultural traditions across time and space.
+            A reminder to slow down and reconnect.
           </div>
           <button type="button" class="collapse-toggle" aria-expanded="false">▼ Show more</button>
           <div class="tab-content art collapsed">
