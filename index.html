@@ -10,7 +10,7 @@
   <meta property="og:title" content="London Craft Week 2025">
   <meta property="og:description"
     content="Interior design through the lens of craft, featuring artists Fazal Ahmed & Amna Fraz.">
-  <meta property="og:image" content="https://yourdomain.com/LCW_Web_Banner_Rectangle_Dates_V1.jpg">
+  <meta property="og:image" content="https://events.aishasubhanidesign.com/LCW_Web_Banner_Rectangle_Dates_V1.jpg">
   <meta name="twitter:card" content="summary_large_image">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
@@ -117,38 +117,6 @@
       object-fit: contain;
     }
 
-    /*`````````````````````````````````````````````````````````Media Queries```````````````````````````````` 
-      ``````````````````````````````````````````````````````````````````````````````````````````````````````
-    */
-    @media (max-width: 480px) {
-      .main-header h1 {
-        white-space: normal;
-        overflow: visible;
-        text-overflow: unset;
-        font-size: 1.8rem;
-        line-height: 1.2;
-      }
-
-    }
-
-    @media (max-width: 480px) {
-
-      .sponsor-logos {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        column-gap: 8px;
-        align-items: center;
-        justify-items: center;
-      }
-
-      .sponsor-logos img {
-        display: block;
-        width: 100%;
-        height: auto;
-        max-height: clamp(80px, 25vw, 120px);
-        object-fit: contain;
-      }
-    }
 
 
 
@@ -182,11 +150,9 @@
       position: relative;
       width: 100%;
       aspect-ratio: 4 / 3 !important;
-      /* force 4:3 on all cards */
       cursor: zoom-in;
       background: var(--bg-page);
       overflow: hidden;
-      /* crop any overflow cleanly */
     }
 
     .image-container img {
@@ -223,8 +189,8 @@
       background: rgba(255, 255, 255, .7);
       border: none;
       border-radius: 50%;
-      width: 32px;
-      height: 32px;
+      width: 42px;
+      height: 42px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -247,15 +213,15 @@
     }
 
     .info-header img {
-      width: 80px;
-      height: 80px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       object-fit: cover;
       box-shadow: 0 4px 8px var(--shadow);
     }
 
     .info-header h2 {
-      font-family: serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 1.5rem;
       color: var(--text-heading);
     }
@@ -404,6 +370,46 @@
     .newsletter-form button:hover {
       background: var(--accent);
     }
+
+    /*`````````````````````````````````````````````````````````Media Queries```````````````````````````````` 
+      ``````````````````````````````````````````````````````````````````````````````````````````````````````
+    */
+    @media (max-width: 480px) {
+      .main-header h1 {
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
+        font-size: 1.8rem;
+        line-height: 1.2;
+      }
+
+    }
+
+    @media (max-width: 480px) {
+
+      .sponsor-logos {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 8px;
+        align-items: center;
+        justify-items: center;
+      }
+
+      .sponsor-logos img {
+        display: block;
+        width: 100%;
+        height: auto;
+        max-height: clamp(80px, 25vw, 120px);
+        object-fit: contain;
+      }
+
+      /* Target the third logo and scale it down 10% on phones */
+      .sponsor-logos img:nth-child(3) {
+        transform: scale(0.9);
+        transform-origin: center center;
+      }
+
+    }
   </style>
 </head>
 
@@ -414,10 +420,9 @@
     <div class="sponsors">
       <p>Brought to you by</p>
       <div class="sponsor-logos">
-        <img src="robert-langford.png" alt="Robert Langford" loading="lazy">
-        <img src="aisha-subhani.png" alt="Aisha Subhani" loading="lazy">
         <img src="grant-pierrus.png" alt="Grant Pierrus" loading="lazy">
-
+        <img src="aisha-subhani.png" alt="Aisha Subhani" loading="lazy">
+        <img src="robert-langford.png" alt="Robert Langford" loading="lazy">
       </div>
     </div>
   </header>
