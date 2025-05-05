@@ -103,14 +103,7 @@
       margin-bottom: 12px;
     }
 
-    @media (max-width: 480px) {
-      .main-header h1 {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: clip;
-        font-size: 1.8rem;
-      }
-    }
+
 
     .sponsor-logos {
       display: flex;
@@ -124,13 +117,40 @@
       object-fit: contain;
     }
 
-
-    /* 3) On very narrow screens, scale them down further */
+    /*`````````````````````````````````````````````````````````Media Queries```````````````````````````````` 
+      ``````````````````````````````````````````````````````````````````````````````````````````````````````
+    */
     @media (max-width: 480px) {
+      .main-header h1 {
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
+        font-size: 1.8rem;
+        line-height: 1.2;
+      }
+
+    }
+
+    @media (max-width: 480px) {
+
+      .sponsor-logos {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 8px;
+        align-items: center;
+        justify-items: center;
+      }
+
       .sponsor-logos img {
-        max-width: 80px;
+        display: block;
+        width: 100%;
+        height: auto;
+        max-height: clamp(80px, 25vw, 120px);
+        object-fit: contain;
       }
     }
+
+
 
     /* —— Two-column Artist Layout —— */
     .artist-row {
@@ -504,10 +524,6 @@
             Her work reflects tangible connections, linking us to our surroundings. It is an expression of the world's
             artistry, underscoring the depth and complexity of our shared environment and a celebration of the cosmos
             that we are all a part of, elementally connected to nature and its infinite wonders.
-<<<<<<< HEAD
-            A reminder to slow down and reconnect.
-=======
->>>>>>> 625f88e1cebaaac47f5bef0f3278ebff9e6fef4e
           </div>
           <button type="button" class="collapse-toggle" aria-expanded="false">▼ Show more</button>
           <div class="tab-content art collapsed">
